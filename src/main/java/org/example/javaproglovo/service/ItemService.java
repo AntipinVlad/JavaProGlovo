@@ -8,11 +8,11 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@AllArgsConstructor
 @Service
+@AllArgsConstructor
 public class ItemService {
 
-    private ItemRepository itemRepository;
+    private final ItemRepository itemRepository;
 
     public List<ItemDto> findByOrderId(int orderId) {
         return itemRepository.getByOrderId(orderId).stream().map(ItemConverter::toDto).toList();

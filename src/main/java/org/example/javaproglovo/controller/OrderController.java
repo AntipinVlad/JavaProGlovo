@@ -17,7 +17,7 @@ public class OrderController {
     private OrderService orderService;
     private ItemService itemService;
 
-    @GetMapping("/{id}")
+    @GetMapping("{id}")
     public OrderDto getOrder(@PathVariable int id) {
         return orderService.findById(id);
     }
@@ -26,6 +26,9 @@ public class OrderController {
     public OrderDto create(@RequestBody OrderDto orderDto) {
         return orderService.save(orderDto);
     }
+
+    @PutMapping
+    public OrderDto update(@RequestBody OrderDto orderDto) { return  orderService.update(orderDto); }
 
     @PostMapping("/{orderId}/items")
     public OrderDto addItem(@PathVariable int orderId, @RequestBody ItemDto itemDto) {
@@ -38,7 +41,7 @@ public class OrderController {
         return itemService.findByOrderId(orderId);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("{id}")
     public void delete(@PathVariable int id) {
         orderService.delete(id);
     }

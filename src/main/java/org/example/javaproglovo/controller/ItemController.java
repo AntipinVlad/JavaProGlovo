@@ -17,7 +17,7 @@ public class ItemController {
         return itemService.update(itemDto);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("{id}")
     public void delete(@PathVariable int id) {
         itemService.delete(id);
     }

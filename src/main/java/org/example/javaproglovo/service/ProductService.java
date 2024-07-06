@@ -12,7 +12,7 @@ import java.util.List;
 @AllArgsConstructor
 public class ProductService {
 
-    private ProductRepository productRepository;
+    private final ProductRepository productRepository;
 
     public ProductDto getById(int id){
         return productRepository.findById(id)
