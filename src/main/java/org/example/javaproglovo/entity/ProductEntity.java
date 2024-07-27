@@ -5,19 +5,29 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.ColumnDefault;
+
 
 @Entity
-@Table("Products")
 @Builder
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Table(name = "products", schema = "public")
 public class ProductEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    @Column(name = "product_id", nullable = false)
+    private int id;
+
+    @Column(nullable = false)
     private String name;
+
+    @ColumnDefault("Ukraine")
+    @Column(nullable = false)
     private String country;
+
+    @Column(nullable = false)
     private double price;
 }

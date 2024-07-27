@@ -3,6 +3,7 @@ package org.example.javaproglovo.service;
 import lombok.AllArgsConstructor;
 import org.example.javaproglovo.converter.ItemConverter;
 import org.example.javaproglovo.dto.ItemDto;
+import org.example.javaproglovo.entity.ItemEntity;
 import org.example.javaproglovo.repository.ItemRepository;
 import org.springframework.stereotype.Service;
 
@@ -14,17 +15,21 @@ public class ItemService {
 
     private final ItemRepository itemRepository;
 
+    public ItemDto getById(int id) {
+        return itemRepository.findById(id).map(ItemConverter::toDto).orElseThrow();
+    }
+
+    public List<ItemDto> getAll() {
+        return itemRepository.findAll().stream().map(ItemConverter::toDto).toList();
+    }
+
     public List<ItemDto> findByOrderId(int orderId) {
-        return itemRepository.getByOrderId(orderId).stream().map(ItemConverter::toDto).toList();
+        return itemRepository.findByOrderId(orderId).stream().map(ItemConverter::toDto).toList();
     }
 
-    public ItemDto save(ItemDto itemDto) {
-        var item = itemRepository.save(ItemConverter.toEntity(itemDto));
-        return ItemConverter.toDto(item);
-    }
-
-    public ItemDto update(ItemDto itemDto) {
-        return save(itemDto);
+    public ItemDto update(ItemDto orderItemDto) {
+        ItemEntity orderItemEntity = itemRepository.save(ItemConverter.toEntity(orderItemDto));
+        return ItemConverter.toDto(orderItemEntity);
     }
 
     public void delete(int id) {
