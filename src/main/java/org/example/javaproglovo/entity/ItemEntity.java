@@ -7,21 +7,29 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table("Items")
 @Builder
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Table(name = "items", schema = "public")
 public class ItemEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "order_item_id", nullable = false)
     private int id;
-    private double price;
-    private int quantity;
-    @ManyToOne(cascade = CascadeType.DETACH)
+
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.DETACH)
+    @JoinColumn(name = "order_id", nullable = false)
     private OrderEntity order;
 
     @OneToOne(cascade = CascadeType.DETACH)
+    @JoinColumn(name = "product_id", nullable = false)
     private ProductEntity product;
+
+    @Column(nullable = false)
+    private double price;
+
+    @Column(nullable = false)
+    private int quantity;
 }

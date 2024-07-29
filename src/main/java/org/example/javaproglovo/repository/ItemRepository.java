@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface ItemRepository extends JpaRepository<ItemEntity, Integer> {
 
-    List<ItemEntity> getByOrderId(int orderId);
+    List<ItemEntity> findByOrderId(int orderId);
 }

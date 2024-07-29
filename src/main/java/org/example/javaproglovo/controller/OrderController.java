@@ -17,31 +17,38 @@ public class OrderController {
     private OrderService orderService;
     private ItemService itemService;
 
-    @GetMapping("{id}")
-    public OrderDto getOrder(@PathVariable int id) {
-        return orderService.findById(id);
+    @GetMapping()
+    public List<OrderDto> getAll() {
+        return orderService.getAll();
     }
 
-    @PostMapping
-    public OrderDto create(@RequestBody OrderDto orderDto) {
+    @GetMapping("/{id}")
+    public OrderDto getById(@PathVariable int id) {
+        return orderService.getById(id);
+    }
+
+    @PostMapping()
+    public OrderDto save(@RequestBody OrderDto orderDto) {
         return orderService.save(orderDto);
     }
 
-    @PutMapping
-    public OrderDto update(@RequestBody OrderDto orderDto) { return  orderService.update(orderDto); }
-
-    @PostMapping("/{orderId}/items")
-    public OrderDto addItem(@PathVariable int orderId, @RequestBody ItemDto itemDto) {
-        itemService.save(itemDto);
-        return orderService.findById(orderId);
+    @PutMapping("/{id}")
+    public OrderDto update(@PathVariable int id, @RequestBody OrderDto orderDto) {
+        orderDto.setId(id);
+        return orderService.update(orderDto);
     }
 
-    @GetMapping("/{orderId}/items")
-    public List<ItemDto> getItems(@PathVariable int orderId) {
-        return itemService.findByOrderId(orderId);
+    @GetMapping("/{id}/items")
+    public List<ItemDto> getItems(@PathVariable int id) {
+        return itemService.findByOrderId(id);
     }
 
-    @DeleteMapping("{id}")
+    @PostMapping("/{id}/items")
+    public OrderDto addItem(@PathVariable int id, @RequestBody ItemDto orderItemDto) {
+        return orderService.addItem(id, orderItemDto);
+    }
+
+    @DeleteMapping("/{id}")
     public void delete(@PathVariable int id) {
         orderService.delete(id);
     }
